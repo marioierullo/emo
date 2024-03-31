@@ -5,11 +5,11 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayMenu: async function(message){
+    displayEmoji: async function(message){
         try {
             // Create a 700x250 pixel canvas and get its context
             // The context will be used to modify the canvas
-            const canvas = Canvas.createCanvas(700, 250);
+            const canvas = Canvas.createCanvas(128, 128);
             const context = canvas.getContext('2d');
             
             // load emo image

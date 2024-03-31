@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/marioierullo/emo#readme",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.51",
     "app-root-path": "^3.1.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5"
