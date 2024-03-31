@@ -1,5 +1,9 @@
 const { Events, ChannelType } = require('discord.js');
 
+//require root directory and path to modal object
+const appRoot = require('app-root-path');
+const modal = require(appRoot + '/modals/displayMenu.js');
+
 // When the client is mentioned.
 // It makes response choices.
 module.exports = {
@@ -12,16 +16,7 @@ module.exports = {
         
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
-            try {
-                await message.channel.send('¡Uyyyyy! ¿Ahora que hago?');
-            } catch (error) {
-                console.error(error);
-                if (message.replied || message.deferred) {
-                    await message.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-                } else {
-                    await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-                }
-            }
+            await modal.displayMenu(message);
         }
     },
 };
