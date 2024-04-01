@@ -19,9 +19,8 @@ module.exports = {
 	        context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
             // Use the helpful Attachment class structure to process the file for you
-	        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'displayMenu.png' });
+	        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: emoji});
 
-            //await message.channel.send('¡Uyyyyy! ¿Ahora que hago?');
             await message.channel.send({ files: [attachment] });
         } catch (error) {
             console.error(error);

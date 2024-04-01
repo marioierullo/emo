@@ -4,7 +4,7 @@ const { Events, ChannelType } = require('discord.js');
 const appRoot = require('app-root-path');
 const {displayMenu} = require(appRoot + '/modals/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
-const {getEmoji} = require(appRoot + '/emojis/getEmoji.js');
+const { getEmoji, getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 
 // When the client is mentioned.
 // It makes response choices.
@@ -18,10 +18,19 @@ module.exports = {
     
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
-            const msg = message.content.replace(message.client.user,'');
+            
+            //removes 'tags' containing all mentions (users, roles, channels) in the message.content
+            const msg = message.content.replace(/<(@[!&]?|#)(\d+)>/g,'');
+            
+            console.log('message:' + msg);
+
+            let collectionEmoji;
+            if (msg) {  
+                collectionEmoji = getCollectionEmoji(msg);
+            }
             try {
-                if (msg) {
-                    await displayEmoji(message, getEmoji('emoBueh.png'));
+                if (collectionEmoji && collectionEmoji.size == 1) {
+                    await displayEmoji(message, collectionEmoji.first().value);
                 } else {
                     await displayMenu(message);
                 }
