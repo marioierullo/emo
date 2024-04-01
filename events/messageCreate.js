@@ -20,19 +20,17 @@ module.exports = {
         if (message.mentions.has(message.client.user)) { 
             
             //removes 'tags' containing all mentions (users, roles, channels) in the message.content
-            const msg = message.content.replace(/<(@[!&]?|#)(\d+)>/g,'');
-            
+            const msg = message.content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();
             console.log('message:' + msg);
 
             let collectionEmoji;
-            if (msg) {  
-                collectionEmoji = getCollectionEmoji(msg);
-            }
+            if (msg) collectionEmoji = getCollectionEmoji(msg);
             try {
-                if (collectionEmoji && collectionEmoji.size == 1) {
-                    await displayEmoji(message, collectionEmoji.first().value);
-                } else {
-                    await displayMenu(message);
+                if (collectionEmoji && collectionEmoji.size === 1 ) {
+                        await displayEmoji(message, collectionEmoji.first().value);
+                }else {
+                    await displayMenu(message,
+                        (collectionEmoji)? collectionEmoji: getCollectionEmoji());
                 }
                 await message.delete();
             } catch (error) {

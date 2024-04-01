@@ -56,12 +56,19 @@ module.exports = {
         );
         */
     },
-    getEmoji: function(key) {
-        return collectionEmoji().get(key.toLowerCase());
+    getEmoji: function(emoji) {
+        return collectionEmoji().get(emoji.toLowerCase());
     },
-    getCollectionEmoji: function(emoji) {
-        return collectionEmoji().filter(
-            (collection) => collection.label.toLowerCase().includes(emoji.toLowerCase())
-        );
+    getCollectionEmoji: function(emoji = '') 
+    {
+        if (emoji) {
+            const collection = collectionEmoji().filter(
+                (item) => item.label.toLowerCase().includes(emoji.toLowerCase())            
+            );
+            if(collection && collection.size > 1)
+                return collection.find(item => item.label.toLowerCase() === emoji.toLowerCase());
+            return collection;
+        }
+        return collectionEmoji();
     }
 };
