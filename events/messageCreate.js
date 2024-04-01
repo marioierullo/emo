@@ -15,11 +15,21 @@ module.exports = {
         if (message.author.bot) return false;
         if (message.channel.type == ChannelType.DM) return false;
         if (message.channel.type == ChannelType.GroupDM) return false;
-        
+    
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
-            await displayMenu(message);
-            await displayEmoji(message, getEmoji('emoBueh.png'));
+            const msg = message.content.replace(message.client.user,'');
+            try {
+                if (msg) {
+                    await displayEmoji(message, getEmoji('emoBueh.png'));
+                } else {
+                    await displayMenu(message);
+                }
+                await message.delete();
+            } catch (error) {
+                console.error(error);
+                await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+            }
         }
-    },
+    }
 };
