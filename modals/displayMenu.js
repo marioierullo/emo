@@ -5,7 +5,7 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayMenu: async function(message) {
+    displayMenu: async function(message, emojiArgs, collectionEmoji) {
         const modal = new ModalBuilder()
 			.setCustomId('displayMenu')
 			.setTitle('EMO Menu');
