@@ -5,19 +5,19 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayMenu: async function(message, emojiArgs, collectionEmoji) {
+    displayMenu: async function(message, collectionEmoji, messageEmoji) {
         const modal = new ModalBuilder()
 			.setCustomId('displayMenu')
 			.setTitle('EMO Menu');
 
-        // Create a 700x250 pixel canvas and get its context
+        // Create a 680x240 pixel canvas and get its context
         // The context will be used to modify the canvas
-        const canvas = Canvas.createCanvas(700, 250);
+        const canvas = Canvas.createCanvas(680, 240);
         const context = canvas.getContext('2d');
         
         try {
             // load emo image
-            const background = await Canvas.loadImage(appRoot + '/images/emoBueh.png');
+            const background = await Canvas.loadImage(appRoot + '/images/emoBueno.png');
 
             // This uses the canvas dimensions to stretch the image onto the entire canvas
             context.drawImage(background, 0, 0, canvas.width, canvas.height);

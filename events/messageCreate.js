@@ -4,36 +4,38 @@ const {Collection, Events, ChannelType } = require('discord.js');
 const appRoot = require('app-root-path');
 const {displayMenu} = require(appRoot + '/modals/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
-const { getEmoji, getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
+const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 
 function parseMessageContent(content) {
     const emoArgs = new Collection();
     if (!content) return emoArgs;
 
     // removes 'tags' containing all mentions (users, roles, channels) in the message.content
-    var emoji = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
-    if (!emoji) return emoArgs;
-    console.log('Parsed content:' + emoji);
+    content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
+    if (!content) return emoArgs;
 
-    // parse string with ::
+    // parse string with :: or space
+    var emoji = content;
     if(emoji.includes('::')) {
-        emoji = emoji.substr(0,emoji.indexOf('::')).trim();
-        content = content.replace(emoji,'').trim();
-    } else{
-        emoji = emoji.substr(0,emoji.indexOf(' ')).trim();
+        emoji = emoji.substr(0,emoji.indexOf('::'));
+        content = content.replace(emoji + '::','');
+    } else if(emoji.includes(' ')) {
+        emoji = emoji.substr(0,emoji.indexOf(' '));
+        content = content.replace(emoji + ' ','');;
+    } else {
         content = '';
     }
-
-    // key, value {}
+ 
+    //set key, value {}
     emoArgs.set('emoArgs', 
         { 
-            emoji: emoji, 
+            emoji: emoji.trim(), 
             message: content  
         }
     );
-    console.log('Parsed emoArgs:' + emoArgs.first().emoji + '-' + emoArgs.first().message);
     return emoArgs;
-}
+};
+
 // When the client is mentioned.
 // It makes response choices.
 module.exports = {
@@ -46,19 +48,25 @@ module.exports = {
     
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
-            
             // parse message arguments
-            const emojiArgs = parseMessageContent(message.content);
-            console.log('emojiArgs:' + emojiArgs.size);
+            const emoArgs = parseMessageContent(message.content);
 
             let collectionEmoji;
-            if (emojiArgs.size === 1) collectionEmoji = getCollectionEmoji(emojiArgs.first().emoji);
+            if (emoArgs.size === 1) 
+                collectionEmoji = getCollectionEmoji(emoArgs.first().emoji);
             try {
                 if (collectionEmoji && collectionEmoji.size === 1 ) {
-                        await displayEmoji(message, collectionEmoji.first().value);
+                    await displayEmoji(
+                        message, 
+                        collectionEmoji.first().value, 
+                        emoArgs.first().message
+                    );
                 }else {
-                    await displayMenu(message, emojiArgs,
-                        (collectionEmoji)? collectionEmoji: getCollectionEmoji());
+                    await displayMenu(
+                        message, 
+                        (collectionEmoji)? collectionEmoji: getCollectionEmoji(),
+                        (emoArgs.size === 1)? emoArgs.first().message: ''
+                    );
                 }
                 await message.delete();
             } catch (error) {

@@ -5,15 +5,18 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayEmoji: async function(message,emoji){
-        try {
-            // Create a 700x250 pixel canvas and get its context
-            // The context will be used to modify the canvas
-            const canvas = Canvas.createCanvas(128, 128);
-            const context = canvas.getContext('2d');
-            
+    displayEmoji: async function(message, emoji, text) {
+        // Create a 680x240 pixel canvas and get its context
+        // The context will be used to modify the canvas
+        const canvas =
+            (text)? Canvas.createCanvas(680, 240) : Canvas.createCanvas(128, 128);
+        const context = canvas.getContext('2d');
+    
+        try {    
             // load emo image
-            const background = await Canvas.loadImage(appRoot + '/images/' + emoji);
+            const background = (text)
+            ? await Canvas.loadImage(appRoot + '/images/emo.png')
+            : await Canvas.loadImage(appRoot + '/images/' + emoji);
 
             // This uses the canvas dimensions to stretch the image onto the entire canvas
 	        context.drawImage(background, 0, 0, canvas.width, canvas.height);
