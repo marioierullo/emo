@@ -17,7 +17,7 @@ module.exports = {
         // EMO Select
         const select = new StringSelectMenuBuilder()
         .setCustomId('emoji')
-        .setPlaceholder('Elija su reacciòn de Emo');
+        .setPlaceholder('Elija su reacciòn (emoji Emo sin un mensaje)');
     
         if(collectionEmoji.size > 0)
             collectionEmoji.forEach(collection => {
@@ -71,15 +71,22 @@ module.exports = {
             // Use the helpful Attachment class structure to process the file for you
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'displayMenu.png' });
 
-            await message.channel.send(
+           const displayMenu = await message.channel.send(
                 { 
+                    content: 'EMO Reaccion: @emo <reaccion> <mensaje>',
                     files: [attachment],
                     components: [selrow, btnrow]
                 }
             );
+            return displayMenu;
         } catch (error) {
             console.error(error);
-            await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+            await message.reply(
+                { 
+                    content: 'There was an error while executing this command!', 
+                    ephemeral: true 
+                }
+            );
         }
     }    
 };

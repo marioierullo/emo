@@ -36,6 +36,12 @@ function parseMessageContent(content) {
     return emoArgs;
 };
 
+function deleteDisplayMenu(message) {
+console.log('deleteDisplayMenu:'+message);
+    //if(message)
+    //    message.delete();
+};
+
 // When the client is mentioned.
 // It makes response choices.
 module.exports = {
@@ -48,6 +54,9 @@ module.exports = {
     
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
+            // remove client user message from screen
+            await message.delete();
+
             // parse message arguments
             const emoArgs = parseMessageContent(message.content);
 
@@ -63,13 +72,15 @@ module.exports = {
                         emoArgs.first().message
                     );
                 }else {
-                    await displayMenu(
+                    const msgDisplayMenu = await displayMenu(
                         message, 
                         (collectionEmoji)? collectionEmoji: getCollectionEmoji(),
                         (emoArgs.size === 1)? emoArgs.first().message: ''
                     );
+
+                    // Delete after 30 seconds;
+                    setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 5000); 
                 }
-                await message.delete();
             } catch (error) {
                 console.error(error);
                 await message.reply(
