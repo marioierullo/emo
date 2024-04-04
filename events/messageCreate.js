@@ -2,7 +2,7 @@ const {Collection, Events, ChannelType } = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
-const {displayMenu} = require(appRoot + '/modals/displayMenu.js');
+const {displayMenu} = require(appRoot + '/interactions/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
 const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 
@@ -52,8 +52,9 @@ module.exports = {
             const emoArgs = parseMessageContent(message.content);
 
             let collectionEmoji;
-            if (emoArgs.size === 1) 
+            if (emoArgs.size === 1)
                 collectionEmoji = getCollectionEmoji(emoArgs.first().emoji);
+
             try {
                 if (collectionEmoji && collectionEmoji.size === 1 ) {
                     await displayEmoji(
@@ -71,7 +72,12 @@ module.exports = {
                 await message.delete();
             } catch (error) {
                 console.error(error);
-                await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                await message.reply(
+                    { 
+                        content: 'There was an error while executing this command!', 
+                        ephemeral: true 
+                    }
+                );
             }
         }
     }
