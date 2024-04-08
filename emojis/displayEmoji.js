@@ -5,7 +5,7 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayEmoji: async function(message, emoji, text) {
+    displayEmoji: async function(message, emoji, text, banner) {
         // Create a 680x240 pixel canvas and get its context
         // The context will be used to modify the canvas
         const canvas =
@@ -14,8 +14,8 @@ module.exports = {
     
         try {    
             // load emo image
-            const background = (text)
-            ? await Canvas.loadImage(appRoot + '/images/emo.png')
+            const background = (banner)
+            ? await Canvas.loadImage(appRoot + '/banners/banner2.png')
             : await Canvas.loadImage(appRoot + '/images/' + emoji);
 
             // This uses the canvas dimensions to stretch the image onto the entire canvas

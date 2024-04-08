@@ -33,8 +33,8 @@ module.exports = {
         // Button to add text
         // ButtonBuilder
         const btnMessage = new ButtonBuilder()
-			.setCustomId('message')
-			.setLabel('Agrega su mensaje')
+			.setCustomId('moreoptions')
+			.setLabel('Agrega mas opciones de fondo y mensaje')
 			.setStyle(ButtonStyle.Primary);
 
         const btnCancel = new ButtonBuilder()
@@ -72,7 +72,7 @@ module.exports = {
 
             const displayMenu = await message.channel.send(
                 { 
-                    content: 'EMO Reacción:@emo <<reacción>> <<mensaje>>',
+                    content: 'Comando de EMO Reacción:@emo <<reacción>><<::fondo>> <<mensaje>>',
                     files: [attachment],
                     components: [selrow, btnrow]
                 }

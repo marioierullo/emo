@@ -9,26 +9,40 @@ const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 function parseMessageContent(content) {
     const object = 
         {
-            emoji: '', 
+            emoji: '',
+            banner: '', 
             message: ''
         }
 
     if(!content) return object;
 
     // removes 'tags' containing all mentions (users, roles, channels) in the message.content
-    var emoji = content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
+    var emoji = banner = content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
     
-    // parse string with space to get emoji and message
-    if(emoji.includes(' ')) {
+    // parse string with :: to get emoji,banner, message
+    if(emoji.includes('::')) {
+        emoji = emoji.substr(0,emoji.indexOf('::'));
+        content = banner = banner.replace(emoji + '::','');
+
+        if(banner.includes(' ')) {
+            banner = banner.substr(0,banner.indexOf(' '));
+            content = content.replace(banner + ' ','');
+        } else {
+            content = '';
+        }
+    } else if(emoji.includes(' ')) { // parse string with space to get emoji and message
         emoji = emoji.substr(0,emoji.indexOf(' '));
-        content = content.replace(emoji + ' ','');;
+        content = content.replace(emoji + ' ','');
+        banner = '';
     } else {
+        banner = '';
         content = '';
     }
 
     // reconcilliate object
-    object.emoji = emoji.trim(); 
-    object.message = content;
+    object.emoji = emoji.trim();
+    object.banner = banner.trim(); 
+    object.message = content.trim();
     return object;
 };
 
@@ -77,7 +91,8 @@ module.exports = {
                     await displayEmoji(
                         message, 
                         selectEmoji.first().value, 
-                        parsedMessage.message
+                        parsedMessage.message,
+                        parsedMessage.banner
                     );
                 }else {
                     const msgDisplayMenu = await displayMenu(
