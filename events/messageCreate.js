@@ -1,4 +1,4 @@
-const {Collection, Events, ChannelType } = require('discord.js');
+const {Events, ChannelType } = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
@@ -7,39 +7,48 @@ const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
 const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 
 function parseMessageContent(content) {
-    const emoArgs = new Collection();
-    if (!content) return emoArgs;
+    const object = 
+        {
+            emoji: '', 
+            message: ''
+        }
+
+    if(!content) return object;
 
     // removes 'tags' containing all mentions (users, roles, channels) in the message.content
-    content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
-    if (!content) return emoArgs;
-
-    // parse string with :: or space
-    var emoji = content;
-    if(emoji.includes('::')) {
-        emoji = emoji.substr(0,emoji.indexOf('::'));
-        content = content.replace(emoji + '::','');
-    } else if(emoji.includes(' ')) {
+    var emoji = content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
+    
+    // parse string with space to get emoji and message
+    if(emoji.includes(' ')) {
         emoji = emoji.substr(0,emoji.indexOf(' '));
         content = content.replace(emoji + ' ','');;
     } else {
         content = '';
     }
- 
-    //set key, value {}
-    emoArgs.set('emoArgs', 
-        { 
-            emoji: emoji.trim(), 
-            message: content  
-        }
-    );
-    return emoArgs;
+
+    // reconcilliate object
+    object.emoji = emoji.trim(); 
+    object.message = content;
+    return object;
 };
 
 function deleteDisplayMenu(message) {
-console.log('deleteDisplayMenu:'+message);
-    //if(message)
-    //    message.delete();
+    if(displayMenuItems.has(message.id+'timeOutDisplayMenu')) {
+        try {
+            message.delete();
+            displayMenuItems.delete(message.id+'emoFields');
+            displayMenuItems.delete(message.id+'emoEmojis');
+            displayMenuItems.delete(message.id+'timeOutDisplayMenu');
+        } catch (error) {
+            console.error(error);
+            message.reply(
+                { 
+                    content: 'There was an error while auto-deleting emo display menu', 
+                    ephemeral: true 
+                }
+            );
+        }
+    }
 };
 
 // When the client is mentioned.
@@ -58,28 +67,35 @@ module.exports = {
             await message.delete();
 
             // parse message arguments
-            const emoArgs = parseMessageContent(message.content);
+            const parsedMessage = parseMessageContent(message.content);
 
-            let collectionEmoji;
-            if (emoArgs.size === 1)
-                collectionEmoji = getCollectionEmoji(emoArgs.first().emoji);
+            // gather select Emoji menu
+            const selectEmoji = getCollectionEmoji(parsedMessage.emoji);
 
             try {
-                if (collectionEmoji && collectionEmoji.size === 1 ) {
+                if (selectEmoji.size === 1 ) {
                     await displayEmoji(
                         message, 
-                        collectionEmoji.first().value, 
-                        emoArgs.first().message
+                        selectEmoji.first().value, 
+                        parsedMessage.message
                     );
                 }else {
                     const msgDisplayMenu = await displayMenu(
                         message, 
-                        (collectionEmoji)? collectionEmoji: getCollectionEmoji(),
-                        (emoArgs.size === 1)? emoArgs.first().message: ''
+                        selectEmoji
                     );
-
+                    
                     // Delete after 30 seconds;
-                    setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 5000); 
+                    const timeOutDisplayMenu = setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 30000); 
+
+                    // add parsedMessage key, value {} to menu items
+                    displayMenuItems.set(msgDisplayMenu.id + 'emoFields', parsedMessage);
+
+                    // add emoji collection to menu items 
+                    displayMenuItems.set(msgDisplayMenu.id + 'emoEmojis', selectEmoji);
+                    
+                    // add emoji collection to menu items 
+                    displayMenuItems.set(msgDisplayMenu.id + 'timeOutDisplayMenu', timeOutDisplayMenu); 
                 }
             } catch (error) {
                 console.error(error);

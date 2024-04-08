@@ -1,4 +1,4 @@
-const {Events } = require('discord.js');
+const {Events, ModalBuilder } = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
@@ -27,9 +27,20 @@ module.exports = {
                 } else if(interaction.isButton()) {
                     if(interaction.customId === 'message') {
                         //create modal
-                        console.log('isButton:'+interaction.customId);
+                        const modal = new ModalBuilder()
+                        .setCustomId('modal')
+			            .setTitle('EMO Reaccion con Mensaje');
+
                     } 
                 }
+                // cancel delayed delete message request 
+                if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
+                    clearTimeout(displayMenuItems.get(interaction.message.id+'timeOutDisplayMenu'));
+                    displayMenuItems.delete(interaction.message.id+'emoFields');
+                    displayMenuItems.delete(interaction.message.id+'emoEmojis');
+                    displayMenuItems.delete(interaction.message.id+'timeOutDisplayMenu');
+                }
+
                 // Delete displaymenu
                 await interaction.message.delete();
                 await interaction.deleteReply();

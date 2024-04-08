@@ -10,10 +10,9 @@ const Canvas = require('@napi-rs/canvas');
 
 //require root directory path
 const appRoot = require('app-root-path');
-const { setSelectEmoji } = require(appRoot + '/emojis/utilEmoji');
 
 module.exports = {
-    displayMenu: async function(message, collectionEmoji, messageEmoji) {
+    displayMenu: async function(message, collectionEmoji) {
         // EMO Select
         const select = new StringSelectMenuBuilder()
         .setCustomId('emoji')
@@ -67,13 +66,13 @@ module.exports = {
             context.font = 'italic 40px sans-serif';
             context.fillStyle = '#ffffff';
             context.fillText('¿Ahora que hago?', canvas.width / 2.2, canvas.height / 2.2);
-
+            
             // Use the helpful Attachment class structure to process the file for you
             const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'displayMenu.png' });
 
-           const displayMenu = await message.channel.send(
+            const displayMenu = await message.channel.send(
                 { 
-                    content: 'EMO Reaccion: @emo <reaccion> <mensaje>',
+                    content: 'EMO Reacción:@emo <<reacción>> <<mensaje>>',
                     files: [attachment],
                     components: [selrow, btnrow]
                 }

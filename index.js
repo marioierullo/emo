@@ -10,7 +10,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Require the necessary discord.js classes
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
 // Create a new client instance
 const client = new Client({ 
@@ -34,6 +34,9 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+//holds displayMenu fields including auto-timeout delete call
+global.displayMenuItems = new Collection();
 
 // Log in to Discord with your client's token
 client.login(process.env.DISCORD_TOKEN);
