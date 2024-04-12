@@ -18,17 +18,27 @@ module.exports = {
             ? await Canvas.loadImage(appRoot + '/banners/' + banner)
             : await Canvas.loadImage(appRoot + '/images/' + emoji);
 
-            // This uses the canvas dimensions to stretch the image onto the entire canvas
-	        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+            // This uses the emoji dimensions 128 x 128
+            const emoEmoji = await Canvas.loadImage(appRoot + '/images/' + emoji);
+            context.drawImage(emoEmoji, 0, 0, 128, 128);
 
-            // if text is present, add emo image over background
+            // if text is present, add emo image and background with text
             if(text) {
-                //const emoOverlay = await Canvas.loadImage(appRoot + '/images/' + emoji);
-                //context.drawImage(emoOverlay, 0, 0, 128, 128);
+                // This uses the canvas dimensions to stretch the image onto the entire canvas
+	            context.drawImage(background, 128, 0, canvas.width, canvas.height);
+
+                // Select the font size and type from one of the natively available fonts
+                // Select the style that will be used to fill the text in
+                // Actually fill the text with a solid color    
+                
+                context.font = 'italic 20px sans-serif';
+                context.fillStyle = '#ffffff';
+                context.fillText(text, 
+                    canvas.width / 2.2, canvas.height / 4.2);
             }
             
             // Use the helpful Attachment class structure to process the file for you
-	        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: emoji});
+	        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'emo-image.png'});
 
             await message.channel.send({ files: [attachment] });
         } catch (error) {
