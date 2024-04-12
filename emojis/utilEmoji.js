@@ -37,7 +37,9 @@ function collectionBanner() {
         { 
             label: 'Fondo1', 
             description: 'Fondo de algo.', 
-            value: 'banner1.png' 
+            value: 'banner1.png',
+            textWidth: 420,
+            textHeight: 30 
         }
     );
 
@@ -45,7 +47,9 @@ function collectionBanner() {
     { 
         label: 'Fondo2', 
         description: 'Fondo de algo.', 
-        value: 'banner2.png' 
+        value: 'banner2.png',
+        textWidth: 420,
+        textHeight: 30 
     }
 );
 

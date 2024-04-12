@@ -15,7 +15,7 @@ module.exports = {
         try {    
             // load background as banner or emo image
             const background = (text)
-            ? await Canvas.loadImage(appRoot + '/banners/' + banner)
+            ? await Canvas.loadImage(appRoot + '/banners/' + banner.value)
             : await Canvas.loadImage(appRoot + '/images/' + emoji);
 
             // This uses the emoji dimensions 128 x 128
@@ -33,8 +33,7 @@ module.exports = {
                 
                 context.font = 'italic 20px sans-serif';
                 context.fillStyle = '#ffffff';
-                context.fillText(text, 
-                    canvas.width / 2.2, canvas.height / 4.2);
+                context.fillText(text, banner.textWidth, banner.textHeight);
             }
             
             // Use the helpful Attachment class structure to process the file for you

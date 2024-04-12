@@ -97,7 +97,7 @@ module.exports = {
                         message, 
                         selectEmoji.first().value, 
                         parsedMessage.message,
-                        selectBanner.random().value
+                        selectBanner.random()
                     );
                 }else {
                     const msgDisplayMenu = await displayMenu(
