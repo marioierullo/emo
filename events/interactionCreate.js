@@ -66,6 +66,7 @@ module.exports = {
                     displayMenuItems.delete(interaction.message.id+'timeOutDisplayMenu');
                     displayMenuItems.delete(interaction.message.id+'emoFields');
                     displayMenuItems.delete(interaction.message.id+'emoEmojis');
+                    displayMenuItems.delete(interaction.message.id+'emoBanners');
                 }
 
                 // Delete displaymenu

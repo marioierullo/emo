@@ -4,6 +4,7 @@ const {Events, ChannelType } = require('discord.js');
 const appRoot = require('app-root-path');
 const {displayMenu} = require(appRoot + '/interactions/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
+const { getCollectionBanner } = require(appRoot + '/emojis/utilEmoji');
 const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
 
 function parseMessageContent(content) {
@@ -50,9 +51,10 @@ function deleteDisplayMenu(message) {
     if(displayMenuItems.has(message.id+'timeOutDisplayMenu')) {
         try {
             message.delete();
+            displayMenuItems.delete(message.id+'timeOutDisplayMenu');
             displayMenuItems.delete(message.id+'emoFields');
             displayMenuItems.delete(message.id+'emoEmojis');
-            displayMenuItems.delete(message.id+'timeOutDisplayMenu');
+            displayMenuItems.delete(message.id+'emoBanners');
         } catch (error) {
             console.error(error);
             message.reply(
@@ -83,8 +85,11 @@ module.exports = {
             // parse message arguments
             const parsedMessage = parseMessageContent(message.content);
 
-            // gather select Emoji menu
+            // gather select Emoji items
             const selectEmoji = getCollectionEmoji(parsedMessage.emoji);
+
+            // gather select Banner items
+            const selectBanner = getCollectionBanner(parsedMessage.banner);
 
             try {
                 if (selectEmoji.size === 1 ) {
@@ -92,7 +97,7 @@ module.exports = {
                         message, 
                         selectEmoji.first().value, 
                         parsedMessage.message,
-                        parsedMessage.banner
+                        selectBanner.first().value
                     );
                 }else {
                     const msgDisplayMenu = await displayMenu(
@@ -103,14 +108,20 @@ module.exports = {
                     // Delete after 30 seconds;
                     const timeOutDisplayMenu = setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 30000); 
 
+                    // add setTimeout call to menu items 
+                    displayMenuItems.set(msgDisplayMenu.id + 'timeOutDisplayMenu', timeOutDisplayMenu); 
+
                     // add parsedMessage key, value {} to menu items
                     displayMenuItems.set(msgDisplayMenu.id + 'emoFields', parsedMessage);
 
                     // add emoji collection to menu items 
                     displayMenuItems.set(msgDisplayMenu.id + 'emoEmojis', selectEmoji);
+
+                    // add banner collection to menu items 
+                    displayMenuItems.set(msgDisplayMenu.id + 'emoBanners', selectBanner);
                     
-                    // add emoji collection to menu items 
-                    displayMenuItems.set(msgDisplayMenu.id + 'timeOutDisplayMenu', timeOutDisplayMenu); 
+                    
+                    
                 }
             } catch (error) {
                 console.error(error);
