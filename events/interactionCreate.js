@@ -21,11 +21,6 @@ module.exports = {
         try {  
             // modal pop-up called
             if(interaction.customId === 'moreoptions') {
-                // cancel delayed delete message request 
-                if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
-                    clearTimeout(displayMenuItems.get(interaction.message.id+'timeOutDisplayMenu'));
-                    displayMenuItems.delete(interaction.message.id+'timeOutDisplayMenu');
-                }
                 //create modal
                 const modal = new ModalBuilder()
                 .setCustomId('modal')
@@ -69,9 +64,9 @@ module.exports = {
                 if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
                     clearTimeout(displayMenuItems.get(interaction.message.id+'timeOutDisplayMenu'));
                     displayMenuItems.delete(interaction.message.id+'timeOutDisplayMenu');
+                    displayMenuItems.delete(interaction.message.id+'emoFields');
+                    displayMenuItems.delete(interaction.message.id+'emoEmojis');
                 }
-                displayMenuItems.delete(interaction.message.id+'emoFields');
-                displayMenuItems.delete(interaction.message.id+'emoEmojis');
 
                 // Delete displaymenu
                 await interaction.message.delete();
