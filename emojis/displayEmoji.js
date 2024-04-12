@@ -6,11 +6,11 @@ const appRoot = require('app-root-path');
 
 module.exports = {
     displayEmoji: async function(message, emoji, text, banner) {
-        // Create a 680x240 pixel canvas and get its context
+        // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
         // Canvas.createCanvas(width, height);
         const canvas = (text)
-            ? Canvas.createCanvas(680, 240) 
+            ? Canvas.createCanvas(680, 320) 
             : Canvas.createCanvas(128, 128);
         const context = canvas.getContext('2d');
     

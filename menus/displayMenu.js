@@ -45,10 +45,10 @@ module.exports = {
         // add components to Row
         const btnrow = new ActionRowBuilder().addComponents(btnMessage, btnCancel);
 
-        // Create a 680x240 pixel canvas and get its context
+        // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
         // Canvas.createCanvas(width, height);
-        const canvas = Canvas.createCanvas(680, 240);
+        const canvas = Canvas.createCanvas(680, 320);
         const context = canvas.getContext('2d');
 
         try {
