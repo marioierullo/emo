@@ -2,10 +2,9 @@ const {Events, ChannelType } = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
-const {displayMenu} = require(appRoot + '/interactions/displayMenu.js');
+const {displayMenu} = require(appRoot + '/menus/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
-const { getCollectionBanner } = require(appRoot + '/emojis/utilEmoji');
-const { getCollectionEmoji } = require(appRoot + '/emojis/utilEmoji');
+const { getCollectionBanner, getCollectionEmoji} = require(appRoot + '/emojis/utilEmoji');
 
 function parseMessageContent(content) {
     const object = 
@@ -118,10 +117,7 @@ module.exports = {
                     displayMenuItems.set(msgDisplayMenu.id + 'emoEmojis', selectEmoji);
 
                     // add banner collection to menu items 
-                    displayMenuItems.set(msgDisplayMenu.id + 'emoBanners', selectBanner);
-                    
-                    
-                    
+                    displayMenuItems.set(msgDisplayMenu.id + 'emoBanners', selectBanner);           
                 }
             } catch (error) {
                 console.error(error);

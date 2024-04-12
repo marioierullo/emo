@@ -15,11 +15,11 @@ module.exports = {
         try {    
             // load background as banner or emo image
             const background = (text)
-            ? await Canvas.loadImage(appRoot + '/banners/' + banner.value)
-            : await Canvas.loadImage(appRoot + '/images/' + emoji);
+            ? await Canvas.loadImage(appRoot + '/images/banners/' + banner.value)
+            : await Canvas.loadImage(appRoot + '/images/emojis/' + emoji);
 
             // This uses the emoji dimensions 128 x 128
-            const emoEmoji = await Canvas.loadImage(appRoot + '/images/' + emoji);
+            const emoEmoji = await Canvas.loadImage(appRoot + '/images/emojis/' + emoji);
             context.drawImage(emoEmoji, 0, 0, 128, 128);
 
             // if text is present, add emo image and background with text

@@ -41,12 +41,14 @@ module.exports = {
                 modal.addComponents(secondActionRow);
                 
                 await interaction.showModal(modal);
-            } else {
-                // acknowledge displaymenu or modal interaction
-                await interaction.deferReply({ ephemeral: true });
+            } else if (interaction.isModalSubmit()) { // modal submitted
+                // modal interaction
+                await interaction.deferReply({ ephemeral: true });    
                 
-                if (interaction.isModalSubmit()) {
-                    console.log('isModalSubmit:'+interaction.message.id);
+                //if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
+                    //    console.log('isModalSubmit:'+interaction.message.id);
+                    //}
+                    console.log('isModalSubmit:');
                     //call timeout?
                     /*
                     await displayEmoji(
@@ -54,7 +56,12 @@ module.exports = {
                         interaction.values[0]
                     );
                     */
-                } else if(interaction.isStringSelectMenu()) {
+                    //interaction.reply({ files: [attachment] });
+            } else {
+                // acknowledge displaymenu
+                await interaction.deferReply({ ephemeral: true });
+                
+                if(interaction.isStringSelectMenu()) {
                     await displayEmoji(
                         interaction.message, 
                         interaction.values[0],

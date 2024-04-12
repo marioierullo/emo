@@ -54,7 +54,7 @@ module.exports = {
         try {
             // load banner
             // This uses the canvas dimensions to stretch the image onto the entire canvas
-            const background = await Canvas.loadImage(appRoot + '/interactions/bg-displaymenu.png');
+            const background = await Canvas.loadImage(appRoot + '/images/bg-displaymenu.png');
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
             // Use the helpful Attachment class structure to process the file for you
