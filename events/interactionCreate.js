@@ -57,7 +57,9 @@ module.exports = {
                 } else if(interaction.isStringSelectMenu()) {
                     await displayEmoji(
                         interaction.message, 
-                        interaction.values[0]
+                        interaction.values[0],
+                        displayMenuItems.get(interaction.message.id+'emoFields').message,
+                        displayMenuItems.get(interaction.message.id+'emoBanners').random()
                     );
                 } 
                 // cancel delayed delete message request 

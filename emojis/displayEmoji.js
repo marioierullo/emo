@@ -33,7 +33,7 @@ module.exports = {
                 
                 context.font = 'italic 20px sans-serif';
                 context.fillStyle = '#ffffff';
-                context.fillText(text, banner.textWidth, banner.textHeight);
+                context.fillText('"' + text + '"', banner.textWidth, banner.textHeight);
             }
             
             // Use the helpful Attachment class structure to process the file for you
