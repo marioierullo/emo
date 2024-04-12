@@ -41,6 +41,14 @@ function collectionBanner() {
         }
     );
 
+    collectionBanner.set('fondo2', 
+    { 
+        label: 'Fondo2', 
+        description: 'Fondo de algo.', 
+        value: 'banner2.png' 
+    }
+);
+
     return collectionBanner;
 };
 
@@ -51,13 +59,14 @@ module.exports = {
             const collectionFiltered = collectionEmoji().filter(
                 item => item.label.toLowerCase().includes(emoji.toLowerCase()));
             
+            if(collectionFiltered) { 
             // check for exact label match
-            if(collectionFiltered && collectionFiltered.size > 1)
-            {
-                const collectionMatched = collectionFiltered.find(
-                    item => item.label.toLowerCase() === emoji.toLowerCase());
-                if(collectionMatched)
-                    return collectionMatched;
+                if(collectionFiltered.size > 1) {
+                    const collectionMatched = collectionFiltered.find(
+                        item => item.label.toLowerCase() === emoji.toLowerCase());
+                    if(collectionMatched)
+                        return collectionMatched;
+                }
                 return collectionFiltered;
             }
         }
@@ -69,15 +78,16 @@ module.exports = {
             const collectionFiltered = collectionBanner().filter(
                 item => item.label.toLowerCase().includes(banner.toLowerCase()));
             
-            // check for exact label match
-            if(collectionFiltered && collectionFiltered.size > 1)
-            {
-                const collectionMatched = collectionFiltered.find(
-                    item => item.label.toLowerCase() === banner.toLowerCase());
-                if(collectionMatched)
-                    return collectionMatched;
-                return collectionFiltered;
-            }
+            if(collectionFiltered) { 
+                // check for exact label match
+                    if(collectionFiltered.size > 1) {
+                        const collectionMatched = collectionFiltered.find(
+                            item => item.label.toLowerCase() === emoji.toLowerCase());
+                        if(collectionMatched)
+                            return collectionMatched;
+                    }
+                    return collectionFiltered;
+                }
         }
         return collectionBanner();
     }

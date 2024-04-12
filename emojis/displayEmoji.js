@@ -13,14 +13,20 @@ module.exports = {
         const context = canvas.getContext('2d');
     
         try {    
-            // load emo image
-            const background = (banner)
-            ? await Canvas.loadImage(appRoot + '/banners/banner2.png')
+            // load background as banner or emo image
+            const background = (text)
+            ? await Canvas.loadImage(appRoot + '/banners/' + banner)
             : await Canvas.loadImage(appRoot + '/images/' + emoji);
 
             // This uses the canvas dimensions to stretch the image onto the entire canvas
 	        context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
+            // if text is present, add emo image over background
+            if(text) {
+                //const emoOverlay = await Canvas.loadImage(appRoot + '/images/' + emoji);
+                //context.drawImage(emoOverlay, 0, 0, 128, 128);
+            }
+            
             // Use the helpful Attachment class structure to process the file for you
 	        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: emoji});
 
