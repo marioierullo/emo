@@ -8,21 +8,21 @@ function collectionEmoji() {
         { 
             label: 'Bueh', 
             description: 'Reacciòn de Bueh.', 
-            value: 'emoBueh.png' 
+            value: '/images/emojis/emoBueh.png' 
         }
     );
     collectionEmoji.set('bueno', 
         { 
             label: 'Bueno', 
             description: 'Reacciòn de Bueno.', 
-            value: 'emoBueno.png' 
+            value: '/images/emojis/emoBueno.png' 
         }
     );
     collectionEmoji.set('emo', 
         { 
             label: 'Emo', 
             description: 'Emo sin reacciòn.', 
-            value: 'emo.png' 
+            value: '/images/emojis/emo.png' 
         }
     );
 
@@ -37,21 +37,20 @@ function collectionBanner() {
         { 
             label: 'Fondo1', 
             description: 'Fondo de algo.', 
-            value: 'banner1.png',
+            value: '/images/banners/banner1.png',
             textWidth: 420,
             textHeight: 30 
         }
     );
-
     collectionBanner.set('fondo2', 
-    { 
-        label: 'Fondo2', 
-        description: 'Fondo de algo.', 
-        value: 'banner2.png',
-        textWidth: 420,
-        textHeight: 30 
-    }
-);
+        { 
+            label: 'Fondo2', 
+            description: 'Fondo de algo.', 
+            value: '/images/banners/banner2.png',
+            textWidth: 420,
+            textHeight: 30 
+        }
+    );
 
     return collectionBanner;
 };

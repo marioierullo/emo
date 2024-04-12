@@ -47,8 +47,8 @@ module.exports = {
 
         // Create a 680x240 pixel canvas and get its context
         // The context will be used to modify the canvas
-        //const canvas = Canvas.createCanvas(1024, 630);
-        const canvas =Canvas.createCanvas(680, 240);
+        // Canvas.createCanvas(width, height);
+        const canvas = Canvas.createCanvas(680, 240);
         const context = canvas.getContext('2d');
 
         try {
@@ -58,11 +58,13 @@ module.exports = {
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
             // Use the helpful Attachment class structure to process the file for you
-            const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'displayMenu.png' });
+            const attachment = new AttachmentBuilder(
+                await canvas.encode('png'), { name: 'displayMenu.png' }
+            );
 
             const displayMenu = await message.channel.send(
                 { 
-                    // content: 'Comando de EMO Reacción:@emo <<reacción>><<::fondo>> <<mensaje>>',
+                    //content: '',
                     files: [attachment],
                     components: [selrow, btnrow]
                 }
