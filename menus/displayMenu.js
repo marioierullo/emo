@@ -16,7 +16,7 @@ module.exports = {
         // EMO Select
         const select = new StringSelectMenuBuilder()
         .setCustomId('emoji')
-        .setPlaceholder('Elija su reacciòn (emoji Emo sin un mensaje)');
+        .setPlaceholder('Elija su reacciòn de emoji Emo');
     
         if(collectionEmoji.size > 0)
             collectionEmoji.forEach(collection => {
