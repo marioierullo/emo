@@ -29,9 +29,9 @@ module.exports = {
                 // Select the font size and type from one of the natively available fonts
                 // Select the style that will be used to fill the text in
                 // Actually fill the text with a solid color    
-                //?? add text width size calculator
                 context.font = 'italic 24px sans-serif';
                 context.fillStyle = '#ffffff';
+                //text width size calculator
                 context.fillText('"' + text + '"', banner.textWidth, banner.textHeight);
             }
             
