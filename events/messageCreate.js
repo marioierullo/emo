@@ -2,7 +2,7 @@ const {Events, ChannelType } = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
-const {displayMenu} = require(appRoot + '/menus/displayMenu.js');
+const {displayMenu, deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
 const { getCollectionBanner, getCollectionEmoji} = require(appRoot + '/emojis/utilEmoji');
 
@@ -46,26 +46,6 @@ function parseMessageContent(content) {
     return object;
 };
 
-function deleteDisplayMenu(message) {
-    if(displayMenuItems.has(message.id+'timeOutDisplayMenu')) {
-        try {
-            message.delete();
-            displayMenuItems.delete(message.id+'timeOutDisplayMenu');
-            displayMenuItems.delete(message.id+'emoFields');
-            displayMenuItems.delete(message.id+'emoEmojis');
-            displayMenuItems.delete(message.id+'emoBanners');
-        } catch (error) {
-            console.error(error);
-            message.reply(
-                { 
-                    content: 'There was an error while auto-deleting emo display menu', 
-                    ephemeral: true 
-                }
-            );
-        }
-    }
-};
-
 // When the client is mentioned.
 // It makes response choices.
 module.exports = {
@@ -96,7 +76,8 @@ module.exports = {
                         message, 
                         selectEmoji.first().value, 
                         parsedMessage.message,
-                        selectBanner.random()
+                        selectBanner.random(),
+                        'message'
                     );
                 }else {
                     const msgDisplayMenu = await displayMenu(

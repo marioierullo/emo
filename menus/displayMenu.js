@@ -79,5 +79,24 @@ module.exports = {
                 }
             );
         }
+    }, 
+    deleteDisplayMenu: function(message) {
+        if(displayMenuItems.has(message.id+'timeOutDisplayMenu')) {
+            try {
+                message.delete();
+                displayMenuItems.delete(message.id+'timeOutDisplayMenu');
+                displayMenuItems.delete(message.id+'emoFields');
+                displayMenuItems.delete(message.id+'emoEmojis');
+                displayMenuItems.delete(message.id+'emoBanners');
+            } catch (error) {
+                console.error(error);
+                message.reply(
+                    { 
+                        content: 'There was an error while auto-deleting emo display menu', 
+                        ephemeral: true 
+                    }
+                );
+            }
+        }
     }    
 };

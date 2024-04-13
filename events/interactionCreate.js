@@ -1,14 +1,10 @@
-const {
-    ActionRowBuilder,
-    Events, 
-    ModalBuilder,
-    TextInputBuilder,
-    TextInputStyle 
-} = require('discord.js');
+const {Events} = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
+const {deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
+const {displayModal} = require(appRoot + '/menus/interactionModal.js');
 
 // When the client is mentioned.
 // It makes response choices.
@@ -17,46 +13,11 @@ module.exports = {
 	async execute(interaction) {
         //exclude commands
         if (interaction.isChatInputCommand()) return;
-        
-        try {  
-            // modal pop-up called
+
+        try {             
+            // modal pop-up called via button click
             if(interaction.customId === 'moreoptions') {
-                //create modal
-                const modal = new ModalBuilder()
-                .setCustomId('modal')
-                .setTitle('EMO Reaccion con Mensaje');
-
-                const hobbiesInput = new TextInputBuilder()
-                    .setCustomId('hobbiesInput')
-                    .setLabel("What's some of your favorite hobbies?")
-                    // Paragraph means multiple lines of text.
-                    .setStyle(TextInputStyle.Paragraph);
-
-                // An action row only holds one text input,
-                // so you need one action row per text input.
-                const secondActionRow = 
-                    new ActionRowBuilder().addComponents(hobbiesInput);
-
-                // Add inputs to the modal
-                modal.addComponents(secondActionRow);
-                
-                await interaction.showModal(modal);
-            } else if (interaction.isModalSubmit()) { // modal submitted
-                // modal interaction
-                await interaction.deferReply({ ephemeral: true });    
-                
-                //if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
-                    //    console.log('isModalSubmit:'+interaction.message.id);
-                    //}
-                    console.log('isModalSubmit:');
-                    //call timeout?
-                    /*
-                    await displayEmoji(
-                        interaction.message, 
-                        interaction.values[0]
-                    );
-                    */
-                    //interaction.reply({ files: [attachment] });
+                await displayModal(interaction);
             } else {
                 // acknowledge displaymenu
                 await interaction.deferReply({ ephemeral: true });
@@ -66,21 +27,32 @@ module.exports = {
                         interaction.message, 
                         interaction.values[0],
                         displayMenuItems.get(interaction.message.id+'emoFields').message,
-                        displayMenuItems.get(interaction.message.id+'emoBanners').random()
+                        displayMenuItems.get(interaction.message.id+'emoBanners').random(),
+                        'message'
                     );
-                } 
-                // cancel delayed delete message request 
-                if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
-                    clearTimeout(displayMenuItems.get(interaction.message.id+'timeOutDisplayMenu'));
-                    displayMenuItems.delete(interaction.message.id+'timeOutDisplayMenu');
-                    displayMenuItems.delete(interaction.message.id+'emoFields');
-                    displayMenuItems.delete(interaction.message.id+'emoEmojis');
-                    displayMenuItems.delete(interaction.message.id+'emoBanners');
+                } else if (interaction.isModalSubmit()) { // modal submitted                    
+                        console.log('isModalSubmit:');
+                        /*
+                        await displayEmoji(
+                            interaction, 
+                            interaction.values[0],
+                            displayMenuItems.get(interaction.message.id+'emoFields').message,
+                            displayMenuItems.get(interaction.message.id+'emoBanners').random(),
+                            'interaction'
+                        );
+                        */
                 }
 
-                // Delete displaymenu
-                await interaction.message.delete();
-                await interaction.deleteReply();
+                if (!interaction.isModalSubmit())
+                    await interaction.deleteReply();
+            }
+
+            // cancel delayed delete message request 
+            if (!interaction.isModalSubmit() && interaction.message.id) {
+                if(displayMenuItems.has(interaction.message.id+'timeOutDisplayMenu')) {
+                    clearTimeout(displayMenuItems.get(interaction.message.id+'timeOutDisplayMenu'));
+                    deleteDisplayMenu(interaction.message);
+                }
             }
         } catch (error) {
             console.error(error);

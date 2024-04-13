@@ -36,16 +36,16 @@ function collectionBanner() {
     collectionBanner.set('fondo1', 
         { 
             label: 'Fondo1', 
-            description: 'Fondo de algo.', 
+            description: 'Fondo de algo 1.', 
             value: '/images/banners/banner1.png',
-            textWidth: 420,
+            textWidth: 320,
             textHeight: 30 
         }
     );
     collectionBanner.set('fondo2', 
         { 
             label: 'Fondo2', 
-            description: 'Fondo de algo.', 
+            description: 'Fondo de algo 2.', 
             value: '/images/banners/banner2.png',
             textWidth: 420,
             textHeight: 30 

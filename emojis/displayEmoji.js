@@ -5,7 +5,7 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayEmoji: async function(message, emoji, text, banner) {
+    displayEmoji: async function(message, emoji, text, banner, eventType) {
         // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
         // Canvas.createCanvas(width, height);
@@ -30,7 +30,7 @@ module.exports = {
                 // Select the style that will be used to fill the text in
                 // Actually fill the text with a solid color    
                 //?? add text width size calculator
-                context.font = 'italic 20px sans-serif';
+                context.font = 'italic 24px sans-serif';
                 context.fillStyle = '#ffffff';
                 context.fillText('"' + text + '"', banner.textWidth, banner.textHeight);
             }
@@ -39,8 +39,10 @@ module.exports = {
 	        const attachment = new AttachmentBuilder(
                 await canvas.encode('png'), { name: 'displayEmoji.png'}
             );
-
-            await message.channel.send({ files: [attachment] });
+            if(eventType === 'message')
+                await message.channel.send({ files: [attachment] });
+            else
+                await message.reply({ files: [attachment] });
         } catch (error) {
             console.error(error);
             if (message.replied || message.deferred) {
