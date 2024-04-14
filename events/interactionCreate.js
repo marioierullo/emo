@@ -2,8 +2,9 @@ const {Events} = require('discord.js');
 
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
-const {deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
+const {getCollectionEmoji, getCollectionBanner} = require(appRoot + '/emojis/utilEmoji.js');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
+const {deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
 const {displayModal} = require(appRoot + '/menus/interactionModal.js');
 
 // When the client is mentioned.
@@ -20,9 +21,13 @@ module.exports = {
                 await displayModal(interaction);
             } else {                
                 if(interaction.isStringSelectMenu()) {
+                    const selectEmoji = 
+                    displayMenuItems.get(interaction.message.id+'emoEmojis').filter(
+                        item => item.value === interaction.values[0] 
+                    );
                     await displayEmoji(
                         interaction, 
-                        interaction.values[0],
+                        selectEmoji.first(),
                         displayMenuItems.get(interaction.message.id+'emoFields').message,
                         displayMenuItems.get(interaction.message.id+'emoBanners').random(),
                         'message'

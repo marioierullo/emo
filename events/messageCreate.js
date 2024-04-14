@@ -75,7 +75,7 @@ module.exports = {
                 if (selectEmoji.size === 1 ) {
                     await displayEmoji(
                         message, 
-                        selectEmoji.first().value, 
+                        selectEmoji.first(), 
                         parsedMessage.message,
                         selectBanner.random(),
                         'message'

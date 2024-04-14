@@ -89,11 +89,28 @@ module.exports = {
     
         try {    
             // This uses the emoji dimensions 128 x 128
-            const emoEmoji = await Canvas.loadImage(appRoot + emoji);
+            const emoEmoji = await Canvas.loadImage(appRoot + emoji.value);
             context.drawImage(emoEmoji, 0, 0, 128, 128);
 
             // if text is present, add background with text
             if(text) {
+                // Select the font size and type from one of the natively available fonts
+                // Select the style that will be used to fill the text in
+                // Actually fill the text with a solid color    
+                var fontSize = 24;
+                var fontWidth = 28;
+                if(emoji.label.length > 5 && emoji.label.length < 9 ) {
+                    fontSize = 20;
+                    fontWidth = 14;
+                } else if(emoji.label.length > 8) {
+                    fontSize = 20;
+                    fontWidth = 0;
+                }
+                     
+                context.font = `italic ${fontSize}px sans-serif`;
+                context.fillStyle = '#ffffff';
+                context.fillText('"' + emoji.label + '"', fontWidth, 160);
+
                 // load background as banner
                 const background = await Canvas.loadImage(appRoot + banner.value);
                 // This uses the canvas dimensions to stretch the image onto the entire canvas
