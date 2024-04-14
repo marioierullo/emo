@@ -4,6 +4,79 @@ const Canvas = require('@napi-rs/canvas');
 //require root directory path
 const appRoot = require('app-root-path');
 
+function textSizeCalculator(context, banner, text) {         
+    // Select the font size and type from one of the natively available fonts
+    // Select the style that will be used to fill the text in
+    // Actually fill the text with a solid color    
+    const fontSize = 24;
+    context.font = `italic ${fontSize}px sans-serif`;
+    context.fillStyle = '#ffffff';
+
+    const textRowWidth = Math.trunc((banner.endTextWidth - banner.startTextWidth) / (fontSize / 2));
+    const textRows = Math.trunc(banner.height / banner.textHeight);
+
+    const estimateRows = Math.trunc(text.length / textRowWidth);
+    let textRowPos = (estimateRows < textRows) 
+        ? Math.abs(banner.height / 2 - banner.textHeight * estimateRows)
+        : banner.textHeight;
+    let rows = 0;
+    do {
+        var rowText = text;
+        //split text out of boundaries
+        if(rowText.length > textRowWidth) {
+            rowText = rowText.substring(0,textRowWidth);  
+        }
+
+        //check for newline
+        if(rowText.includes('\n')) {
+            rowText = rowText.substring(0,rowText.indexOf('\n'));
+            text = text.replace(rowText + '\n','');
+        } else {
+            text = text.replace(rowText,'');
+ 
+            //check for possibility to complete a word or remove carry over longer word
+            if(text.includes(' ')) {
+                const getBlankPos = text.indexOf(' ');
+                if(getBlankPos < 3) {
+                    const getExtra = text.substring(0,getBlankPos + 1);
+                    rowText += getExtra;
+                    text = text.replace(getExtra,'');
+                }
+            } 
+
+            if(rowText.includes(' ')) {
+                const getBlankPos = rowText.lastIndexOf(' ');
+                if((rowText.length - getBlankPos - 1) < 3) {
+                    const removeExtra = 
+                        rowText.substring(getBlankPos);
+                    rowText = rowText.replace(new RegExp(removeExtra + '$'),'');
+                    text = removeExtra.concat(text);
+                }
+            }
+        }
+
+        rowText = rowText.trim();
+        text = text.trim();
+        if(rowText.length > 0) { 
+            if(rowText === text || text.length === 0) {
+                if(rows === 0) 
+                    rowText = '"' + rowText;
+                rows = textRows;
+            }
+            else
+                ++rows;
+
+            context.fillText(
+                ((rows === 1) ? '"' : '') + 
+                rowText +  
+                ((rows === textRows)? '"' : ''), 
+                banner.startTextWidth, textRowPos
+            );
+            textRowPos += banner.textHeight;
+        }
+    } while(rows < textRows);
+};
+
 module.exports = {
     displayEmoji: async function(message, emoji, text, banner, eventType) {
         // Create a 680x320 pixel canvas and get its context
@@ -25,20 +98,15 @@ module.exports = {
                 const background = await Canvas.loadImage(appRoot + banner.value);
                 // This uses the canvas dimensions to stretch the image onto the entire canvas
 	            context.drawImage(background, 128, 0, canvas.width, canvas.height);
-
-                // Select the font size and type from one of the natively available fonts
-                // Select the style that will be used to fill the text in
-                // Actually fill the text with a solid color    
-                context.font = 'italic 24px sans-serif';
-                context.fillStyle = '#ffffff';
+                
                 //text width size calculator
-                context.fillText('"' + text + '"', banner.textWidth, banner.textHeight);
-            }
-            
+                textSizeCalculator(context, banner, text);  
+            }         
             // Use the helpful Attachment class structure to process the file for you
 	        const attachment = new AttachmentBuilder(
                 await canvas.encode('png'), { name: 'displayEmoji.png'}
             );
+
             if(eventType === 'message')
                 await message.channel.send({ files: [attachment] });
             else

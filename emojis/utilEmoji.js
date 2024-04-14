@@ -227,7 +227,9 @@ function collectionBanner() {
             label: 'Fondo1', 
             description: 'Sentado, encojimiento de hombros.', 
             value: '/images/banners/banner1.png',
-            textWidth: 320,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -236,7 +238,9 @@ function collectionBanner() {
             label: 'Fondo2', 
             description: 'Toma de cerca, aterrorizado.', 
             value: '/images/banners/banner2.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -245,7 +249,9 @@ function collectionBanner() {
             label: 'Fondo3', 
             description: 'Fotocopia, ojos cerrados.', 
             value: '/images/banners/banner3.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 400,
+            endTextWidth: 680,
             textHeight: 30 
         }
     )
@@ -254,7 +260,9 @@ function collectionBanner() {
             label: 'Fondo4', 
             description: 'Fotocopia, sonrisa forzada.', 
             value: '/images/banners/banner4.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 400,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -263,7 +271,9 @@ function collectionBanner() {
             label: 'Fondo5', 
             description: 'Pecera, parecerse a un pez.', 
             value: '/images/banners/banner5.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -272,7 +282,9 @@ function collectionBanner() {
             label: 'Fondo6', 
             description: 'Con las manos arriba.', 
             value: '/images/banners/banner6.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 360,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -281,7 +293,9 @@ function collectionBanner() {
             label: 'Fondo7', 
             description: 'Manejando, con un tazòn rojo.', 
             value: '/images/banners/banner7.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -290,7 +304,9 @@ function collectionBanner() {
             label: 'Fondo8', 
             description: 'Artes y Oficios.', 
             value: '/images/banners/banner8.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 400,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -299,7 +315,9 @@ function collectionBanner() {
             label: 'Fondo9', 
             description: 'Tenedor pegado en la cabeza.', 
             value: '/images/banners/banner9.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -308,7 +326,9 @@ function collectionBanner() {
             label: 'Fondo10', 
             description: 'Dedo en té caliente.', 
             value: '/images/banners/banner10.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -317,7 +337,9 @@ function collectionBanner() {
             label: 'Fondo11', 
             description: 'Sorprendido, en la playa.', 
             value: '/images/banners/banner11.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 380,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -326,7 +348,9 @@ function collectionBanner() {
             label: 'Fondo12', 
             description: 'Posando, en la playa.', 
             value: '/images/banners/banner12.png',
-            textWidth: 420,
+            height: 320,
+            startTextWidth: 390,
+            endTextWidth: 680,
             textHeight: 30 
         }
     );
@@ -340,12 +364,12 @@ module.exports = {
             const collectionFiltered = collectionEmoji().filter(
                 item => item.label.toLowerCase().includes(emoji.toLowerCase()));
             
-            if(collectionFiltered) { 
-            // check for exact label match
+            if(collectionFiltered.size > 0) { 
+                // check for exact label match
                 if(collectionFiltered.size > 1) {
-                    const collectionMatched = collectionFiltered.find(
-                        item => item.label.toLowerCase() === emoji.toLowerCase());
-                    if(collectionMatched)
+                    const collectionMatched = collectionFiltered.filter(
+                        item => item.label.toLowerCase() === emoji.toLowerCase());   
+                    if(collectionMatched.size > 0)
                         return collectionMatched;
                 }
                 return collectionFiltered;
@@ -358,17 +382,17 @@ module.exports = {
             // gather all matches
             const collectionFiltered = collectionBanner().filter(
                 item => item.label.toLowerCase().includes(banner.toLowerCase()));
-            
-            if(collectionFiltered) { 
+
+            if(collectionFiltered.size > 0) { 
                 // check for exact label match
-                    if(collectionFiltered.size > 1) {
-                        const collectionMatched = collectionFiltered.find(
-                            item => item.label.toLowerCase() === emoji.toLowerCase());
-                        if(collectionMatched)
-                            return collectionMatched;
-                    }
-                    return collectionFiltered;
+                if(collectionFiltered.size > 1) {
+                    const collectionMatched = collectionFiltered.filter(
+                        item => item.label.toLowerCase() === banner.toLowerCase());   
+                    if(collectionMatched.size > 0)
+                        return collectionMatched;
                 }
+                return collectionFiltered;
+            }
         }
         return collectionBanner();
     }

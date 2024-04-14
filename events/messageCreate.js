@@ -21,17 +21,17 @@ function parseMessageContent(content) {
     
     // parse string with :: to get emoji,banner, message
     if(emoji.includes('::')) {
-        emoji = emoji.substr(0,emoji.indexOf('::'));
+        emoji = emoji.substring(0,emoji.indexOf('::'));
         content = banner = banner.replace(emoji + '::','');
 
         if(banner.includes(' ')) {
-            banner = banner.substr(0,banner.indexOf(' '));
+            banner = banner.substring(0,banner.indexOf(' '));
             content = content.replace(banner + ' ','');
         } else {
             content = '';
         }
     } else if(emoji.includes(' ')) { // parse string with space to get emoji and message
-        emoji = emoji.substr(0,emoji.indexOf(' '));
+        emoji = emoji.substring(0,emoji.indexOf(' '));
         content = content.replace(emoji + ' ','');
         banner = '';
     } else {
@@ -69,7 +69,6 @@ module.exports = {
 
             // gather select Banner items
             const selectBanner = getCollectionBanner(parsedMessage.banner);
-
             try {
                 if (selectEmoji.size === 1 ) {
                     await displayEmoji(
