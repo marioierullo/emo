@@ -39,13 +39,6 @@ function collectionEmoji() {
             value: '/images/emojis/emoBueno.png' 
         }
     );
-    collectionEmoji.set('comocionado', 
-        { 
-            label: 'Comocionado', 
-            description: 'Reacciòn de Comocionado.', 
-            value: '/images/emojis/emoComocionado.png' 
-        }
-    );
     collectionEmoji.set('desdichado', 
         { 
             label: 'Desdichado', 
@@ -60,11 +53,11 @@ function collectionEmoji() {
             value: '/images/emojis/emoEeee.png' 
         }
     );
-    collectionEmoji.set('eeee2', 
+    collectionEmoji.set('que', 
         { 
-            label: 'Eeee2', 
-            description: 'Reacciòn de Eeee.', 
-            value: '/images/emojis/emoEeee2.png' 
+            label: 'Que', 
+            description: 'Reacciòn de Que.', 
+            value: '/images/emojis/emoQue.png' 
         }
     );
     collectionEmoji.set('hambre', 
@@ -93,13 +86,6 @@ function collectionEmoji() {
             label: 'Mirada', 
             description: 'Reacciòn de Mirada Profunda.', 
             value: '/images/emojis/emoMirada.png' 
-        }
-    );
-    collectionEmoji.set('mirada2', 
-        { 
-            label: 'Mirada2', 
-            description: 'Reacciòn de Mirada Fija.', 
-            value: '/images/emojis/emoMirada2.png' 
         }
     );
     collectionEmoji.set('mmmm', 
@@ -144,25 +130,11 @@ function collectionEmoji() {
             value: '/images/emojis/emoOhhh.png' 
         }
     );
-    collectionEmoji.set('ok', 
-        { 
-            label: 'Ok', 
-            description: 'Reacciòn de Ok.', 
-            value: '/images/emojis/emoOk.png' 
-        }
-    );
     collectionEmoji.set('oooo', 
         { 
             label: 'Oooo', 
             description: 'Reacciòn de Oooo.', 
             value: '/images/emojis/emoOooo.png' 
-        }
-    );
-    collectionEmoji.set('oooo2', 
-        { 
-            label: 'Oooo2', 
-            description: 'Reacciòn de Oooo.', 
-            value: '/images/emojis/emoOooo2.png' 
         }
     );
     collectionEmoji.set('perdido', 
@@ -186,13 +158,6 @@ function collectionEmoji() {
             value: '/images/emojis/emoSacado.png' 
         }
     );
-    collectionEmoji.set('suspiro', 
-        { 
-            label: 'Suspiro', 
-            description: 'Reacciòn de Suspiro.', 
-            value: '/images/emojis/emoSuspiro.png' 
-        }
-    );
     collectionEmoji.set('triste', 
         { 
             label: 'Triste', 
@@ -200,18 +165,18 @@ function collectionEmoji() {
             value: '/images/emojis/emoTriste.png' 
         }
     );
+    collectionEmoji.set('uuuu', 
+        { 
+            label: 'Uuuu', 
+            description: 'Reacciòn de Uuuu.', 
+            value: '/images/emojis/emoUuuu.png' 
+        }
+    );
     collectionEmoji.set('uyyy', 
         { 
             label: 'Uyyy', 
             description: 'Reacciòn de Uyyy.', 
             value: '/images/emojis/emoUyyy.png' 
-        }
-    );
-    collectionEmoji.set('uyyy2', 
-        { 
-            label: 'Uyyy2', 
-            description: 'Reacciòn de Uyyy.', 
-            value: '/images/emojis/emoUyyy2.png' 
         }
     );
 

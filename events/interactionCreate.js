@@ -18,13 +18,10 @@ module.exports = {
             // modal pop-up called via button click
             if(interaction.customId === 'moreoptions') {
                 await displayModal(interaction);
-            } else {
-                // acknowledge displaymenu
-                await interaction.deferReply({ ephemeral: true });
-                
+            } else {                
                 if(interaction.isStringSelectMenu()) {
                     await displayEmoji(
-                        interaction.message, 
+                        interaction, 
                         interaction.values[0],
                         displayMenuItems.get(interaction.message.id+'emoFields').message,
                         displayMenuItems.get(interaction.message.id+'emoBanners').random(),
@@ -38,13 +35,14 @@ module.exports = {
                             interaction.values[0],
                             displayMenuItems.get(interaction.message.id+'emoFields').message,
                             displayMenuItems.get(interaction.message.id+'emoBanners').random(),
-                            'interaction'
+                            'message'
                         );
                         */
-                }
-
-                if (!interaction.isModalSubmit())
-                    await interaction.deleteReply();
+                } else {
+                    // acknowledge displaymenu
+                    //await interaction.deferReply({ ephemeral: true });
+                    //await interaction.deleteReply();
+                }      
             }
 
             // cancel delayed delete message request 

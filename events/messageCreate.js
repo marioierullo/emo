@@ -18,7 +18,8 @@ function parseMessageContent(content) {
 
     // removes 'tags' containing all mentions (users, roles, channels) in the message.content
     var emoji = banner = content = content.replace(/<(@[!&]?|#)(\d+)>/g,'').trim();    
-    
+    if(!emoji) return object;
+
     // parse string with :: to get emoji,banner, message
     if(emoji.includes('::')) {
         emoji = emoji.substring(0,emoji.indexOf('::'));
@@ -66,9 +67,10 @@ module.exports = {
 
             // gather select Emoji items
             const selectEmoji = getCollectionEmoji(parsedMessage.emoji);
-
+ 
             // gather select Banner items
             const selectBanner = getCollectionBanner(parsedMessage.banner);
+
             try {
                 if (selectEmoji.size === 1 ) {
                     await displayEmoji(
@@ -79,10 +81,7 @@ module.exports = {
                         'message'
                     );
                 }else {
-                    const msgDisplayMenu = await displayMenu(
-                        message, 
-                        selectEmoji
-                    );
+                    const msgDisplayMenu = await displayMenu(message, selectEmoji);
                     
                     // Delete after 30 seconds;
                     const timeOutDisplayMenu = setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 30000); 
