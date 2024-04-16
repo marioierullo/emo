@@ -215,7 +215,7 @@ function collectionBanner() {
             description: 'Fotocopia, ojos cerrados.', 
             value: '/images/banners/banner3.png',
             height: 320,
-            startTextWidth: 400,
+            startTextWidth: 380,
             endTextWidth: 680,
             textHeight: 30 
         }
@@ -226,7 +226,7 @@ function collectionBanner() {
             description: 'Fotocopia, sonrisa forzada.', 
             value: '/images/banners/banner4.png',
             height: 320,
-            startTextWidth: 400,
+            startTextWidth: 380,
             endTextWidth: 680,
             textHeight: 30 
         }
@@ -270,7 +270,7 @@ function collectionBanner() {
             description: 'Artes y Oficios.', 
             value: '/images/banners/banner8.png',
             height: 320,
-            startTextWidth: 400,
+            startTextWidth: 380,
             endTextWidth: 680,
             textHeight: 30 
         }
@@ -314,7 +314,7 @@ function collectionBanner() {
             description: 'Posando, en la playa.', 
             value: '/images/banners/banner12.png',
             height: 320,
-            startTextWidth: 390,
+            startTextWidth: 380,
             endTextWidth: 680,
             textHeight: 30 
         }
