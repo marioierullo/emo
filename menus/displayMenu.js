@@ -12,38 +12,74 @@ const Canvas = require('@napi-rs/canvas');
 const appRoot = require('app-root-path');
 
 module.exports = {
-    displayMenu: async function(message, collectionEmoji) {
-        // EMO Select
-        const select = new StringSelectMenuBuilder()
-        .setCustomId('emoji')
-        .setPlaceholder('Elija su reacciòn de emoji Emo');
+    displayMenu: async function(message, selectEmoji, selectBanner, banner) {
+        //emoji select
+        const emojiSelect = new StringSelectMenuBuilder()
+        .setCustomId('emojiSelect')
+        .setPlaceholder('Elija su reacción de emoji Emo');
     
-        if(collectionEmoji.size > 0)
-            collectionEmoji.forEach(collection => {
-                select.addOptions(
+        selectEmoji.forEach(
+            collection => {
+                emojiSelect.addOptions(
                     new StringSelectMenuOptionBuilder()
                     .setLabel(collection.label)
                     .setDescription(collection.description)
                     .setValue(collection.value)
                 );
-            });
+            }
+        );
+
         // add components to Row
-        const selrow = new ActionRowBuilder().addComponents(select);
+        const emojiActionRow = 
+            new ActionRowBuilder().addComponents(emojiSelect);
+
+        //banner select
+        const bannerSelect = new StringSelectMenuBuilder()
+        .setCustomId('bannerSelect')
+        .setPlaceholder('Elija su fondo de mensaje Emo');
+    
+        selectBanner.forEach(
+            collection => {
+                bannerSelect.addOptions(
+                    new StringSelectMenuOptionBuilder()
+                    .setLabel(collection.label)
+                    .setDescription(collection.description)
+                    .setValue(collection.value)
+                );
+            }
+        );
+
+        bannerSelect.options.every(option => { 
+            if(option.data.value === banner) {
+                option.setDefault(true);
+                return false;
+            }
+            return true;
+        });
+
+        // add components to Row
+        const bannerActionRow = 
+            new ActionRowBuilder().addComponents(bannerSelect);
 
         // Button to add text
-        // ButtonBuilder
         const btnMessage = new ButtonBuilder()
-			.setCustomId('moreoptions')
-			.setLabel('Agrega mas opciones de fondo y mensaje')
+			.setCustomId('message')
+			.setLabel('Agrega su mensaje')
+			.setStyle(ButtonStyle.Primary);
+
+        const btnSubmit = new ButtonBuilder()
+			.setCustomId('submit')
+			.setLabel('Envía sus opciones')
 			.setStyle(ButtonStyle.Primary);
 
         const btnCancel = new ButtonBuilder()
 			.setCustomId('cancel')
-			.setLabel('Retirarse del menu')
+			.setLabel('Salir del menú')
 			.setStyle(ButtonStyle.Secondary);
 
         // add components to Row
-        const btnrow = new ActionRowBuilder().addComponents(btnMessage, btnCancel);
+        const buttonsActionRow = 
+            new ActionRowBuilder().addComponents(btnMessage, btnSubmit, btnCancel);
 
         // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
@@ -54,19 +90,48 @@ module.exports = {
         try {
             // load banner
             // This uses the canvas dimensions to stretch the image onto the entire canvas
-            const background = await Canvas.loadImage(appRoot + '/images/bg-displaymenu.png');
+            const background = await Canvas.loadImage(appRoot + banner);
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+            context.font = 'italic 40px sans-serif';
+            context.fillStyle = '#ffffff';
+            context.fillText('"!Uyyyyyyyyy¡"', canvas.width / 2, canvas.height / 3);
+            context.fillText('"¿Ahora, que', canvas.width / 2, canvas.height / 2);
+            context.fillText('hago?"', canvas.width / 2, canvas.height / 1.5);
+
+            context.font = 'bold 20px sans-serif';
+            context.fillText('Comando de Emo Reacción:', 30, canvas.height - 10);
+
+            context.font = '18px sans-serif';
+            context.fillText('@emo <', 300, canvas.height - 10);
+
+            context.font = 'bold italic 18px sans-serif';
+            context.fillText('reacción', 370, canvas.height - 10);
+
+            context.font = '18px sans-serif';
+            context.fillText('><', 444, canvas.height - 10);
+
+            context.font = 'bold italic 18px sans-serif';
+            context.fillText('::fondo', 464, canvas.height - 10);
+
+            context.font = '18px sans-serif';
+            context.fillText('> <', 528, canvas.height - 10);
+
+            context.font = 'bold italic 18px sans-serif';
+            context.fillText('mensaje', 554, canvas.height - 10);
+
+            context.font = '18px sans-serif';
+            context.fillText('>', 626, canvas.height - 10);
 
             // Use the helpful Attachment class structure to process the file for you
             const attachment = new AttachmentBuilder(
                 await canvas.encode('png'), { name: 'displayMenu.png' }
             );
-
+        
             const displayMenu = await message.channel.send(
                 { 
-                    //content: '',
                     files: [attachment],
-                    components: [selrow, btnrow]
+                    components: [emojiActionRow,bannerActionRow, buttonsActionRow]
                 }
             );
             return displayMenu;
@@ -74,7 +139,7 @@ module.exports = {
             console.error(error);
             await message.reply(
                 { 
-                    content: 'There was an error while executing this command!', 
+                    content: 'There was an error while executing displayMenu!', 
                     ephemeral: true 
                 }
             );
@@ -92,7 +157,7 @@ module.exports = {
                 console.error(error);
                 message.reply(
                     { 
-                        content: 'There was an error while auto-deleting emo display menu', 
+                        content: 'There was an error while auto-deleting emo display menu!', 
                         ephemeral: true 
                     }
                 );

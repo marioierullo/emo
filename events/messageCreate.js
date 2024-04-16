@@ -81,10 +81,17 @@ module.exports = {
                         'message'
                     );
                 }else {
-                    const msgDisplayMenu = await displayMenu(message, selectEmoji);
-                    
+                    parsedMessage.banner = selectBanner.random().value;
+                    const msgDisplayMenu = 
+                        await displayMenu(
+                            message, 
+                            selectEmoji, 
+                            selectBanner,
+                            parsedMessage.banner
+                        );
+    
                     // Delete after 30 seconds;
-                    const timeOutDisplayMenu = setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 30000); 
+                    const timeOutDisplayMenu = setTimeout(() => deleteDisplayMenu(msgDisplayMenu), 30_000); 
 
                     // add setTimeout call to menu items 
                     displayMenuItems.set(msgDisplayMenu.id + 'timeOutDisplayMenu', timeOutDisplayMenu); 
@@ -102,7 +109,7 @@ module.exports = {
                 console.error(error);
                 await message.reply(
                     { 
-                        content: 'There was an error while executing this command!', 
+                        content: 'There was an error while executing a message!', 
                         ephemeral: true 
                     }
                 );

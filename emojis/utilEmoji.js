@@ -7,175 +7,175 @@ function collectionEmoji() {
     collectionEmoji.set('emo', 
         { 
             label: 'Emo', 
-            description: 'Emo sin reacciòn.', 
+            description: 'Emo sin reacción.', 
             value: '/images/emojis/emo.png' 
         }
     );
     collectionEmoji.set('aaaa', 
         { 
             label: 'Aaaa', 
-            description: 'Reacciòn de Aaaa.', 
+            description: 'Reacción de Aaaa.', 
             value: '/images/emojis/emoAaaa.png' 
         }
     );
     collectionEmoji.set('asco', 
         { 
             label: 'Asco', 
-            description: 'Reacciòn de Asco.', 
+            description: 'Reacción de Asco.', 
             value: '/images/emojis/emoAsco.png' 
         }
     );
     collectionEmoji.set('bueh', 
         { 
             label: 'Bueh', 
-            description: 'Reacciòn de Bueh.', 
+            description: 'Reacción de Bueh.', 
             value: '/images/emojis/emoBueh.png' 
         }
     );
     collectionEmoji.set('bueno', 
         { 
             label: 'Bueno', 
-            description: 'Reacciòn de Bueno.', 
+            description: 'Reacción de Bueno.', 
             value: '/images/emojis/emoBueno.png' 
         }
     );
     collectionEmoji.set('desdichado', 
         { 
             label: 'Desdichado', 
-            description: 'Reacciòn de Desdichado.', 
+            description: 'Reacción de Desdichado.', 
             value: '/images/emojis/emoDesdichado.png' 
         }
     );
     collectionEmoji.set('eeee', 
         { 
             label: 'Eeee', 
-            description: 'Reacciòn de Eeee.', 
+            description: 'Reacción de Eeee.', 
             value: '/images/emojis/emoEeee.png' 
         }
     );
     collectionEmoji.set('que', 
         { 
             label: 'Que', 
-            description: 'Reacciòn de Que.', 
+            description: 'Reacción de Que.', 
             value: '/images/emojis/emoQue.png' 
         }
     );
     collectionEmoji.set('hambre', 
         { 
             label: 'Hambre', 
-            description: 'Reacciòn de Que Hambre.', 
+            description: 'Reacción de Que Hambre.', 
             value: '/images/emojis/emoHambre.png' 
         }
     );
     collectionEmoji.set('lloron', 
         { 
             label: 'Lloron', 
-            description: 'Reacciòn de Lloron.', 
+            description: 'Reacción de Lloron.', 
             value: '/images/emojis/emoLloron.png' 
         }
     );
     collectionEmoji.set('loco', 
         { 
             label: 'Loco', 
-            description: 'Reacciòn de Loco.', 
+            description: 'Reacción de Loco.', 
             value: '/images/emojis/emoLoco.png' 
         }
     );
     collectionEmoji.set('mirada', 
         { 
             label: 'Mirada', 
-            description: 'Reacciòn de Mirada Profunda.', 
+            description: 'Reacción de Mirada Profunda.', 
             value: '/images/emojis/emoMirada.png' 
         }
     );
     collectionEmoji.set('mmmm', 
         { 
             label: 'Mmmm', 
-            description: 'Reacciòn de Mmmm.', 
+            description: 'Reacción de Mmmm.', 
             value: '/images/emojis/emoMmmm.png' 
         }
     );
     collectionEmoji.set('molesto', 
         { 
             label: 'Molesto', 
-            description: 'Reacciòn de Molesto.', 
+            description: 'Reacción de Molesto.', 
             value: '/images/emojis/emoMolesto.png' 
         }
     );
     collectionEmoji.set('naaa', 
         { 
             label: 'Naaa', 
-            description: 'Reacciòn de Naaa.', 
+            description: 'Reacción de Naaa.', 
             value: '/images/emojis/emoNaaa.png' 
         }
     );
     collectionEmoji.set('nervioso', 
         { 
             label: 'Nervioso', 
-            description: 'Reacciòn de Nervioso.', 
+            description: 'Reacción de Nervioso.', 
             value: '/images/emojis/emoNervioso.png' 
         }
     );
     collectionEmoji.set('nooo', 
         { 
             label: 'Nooo', 
-            description: 'Reacciòn de Nooo.', 
+            description: 'Reacción de Nooo.', 
             value: '/images/emojis/emoNooo.png' 
         }
     );
     collectionEmoji.set('ohhh', 
         { 
             label: 'Ohhh', 
-            description: 'Reacciòn de Ohhh.', 
+            description: 'Reacción de Ohhh.', 
             value: '/images/emojis/emoOhhh.png' 
         }
     );
     collectionEmoji.set('oooo', 
         { 
             label: 'Oooo', 
-            description: 'Reacciòn de Oooo.', 
+            description: 'Reacción de Oooo.', 
             value: '/images/emojis/emoOooo.png' 
         }
     );
     collectionEmoji.set('perdido', 
         { 
             label: 'Perdido', 
-            description: 'Reacciòn de Perdido.', 
+            description: 'Reacción de Perdido.', 
             value: '/images/emojis/emoPerdido.png' 
         }
     );
     collectionEmoji.set('preocupado', 
         { 
             label: 'Preocupado', 
-            description: 'Reacciòn de Preocupado.', 
+            description: 'Reacción de Preocupado.', 
             value: '/images/emojis/emoPreocupado.png' 
         }
     );
     collectionEmoji.set('sacado', 
         { 
             label: 'Sacado', 
-            description: 'Reacciòn de Sacado.', 
+            description: 'Reacción de Sacado.', 
             value: '/images/emojis/emoSacado.png' 
         }
     );
     collectionEmoji.set('triste', 
         { 
             label: 'Triste', 
-            description: 'Reacciòn de Triste.', 
+            description: 'Reacción de Triste.', 
             value: '/images/emojis/emoTriste.png' 
         }
     );
     collectionEmoji.set('uuuu', 
         { 
             label: 'Uuuu', 
-            description: 'Reacciòn de Uuuu.', 
+            description: 'Reacción de Uuuu.', 
             value: '/images/emojis/emoUuuu.png' 
         }
     );
     collectionEmoji.set('uyyy', 
         { 
             label: 'Uyyy', 
-            description: 'Reacciòn de Uyyy.', 
+            description: 'Reacción de Uyyy.', 
             value: '/images/emojis/emoUyyy.png' 
         }
     );
