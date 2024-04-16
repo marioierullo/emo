@@ -56,10 +56,10 @@ module.exports = {
                             item => item.value === emoFields.banner).first()
                     );
                 } else {
-                    displayMenuItems.set(interaction.id + 'emoFields', emoFields);
-                    displayMenuItems.set(interaction.id + 'emoEmojis',
+                    displayMenuItems.set(interaction.user.id + 'emoFields', emoFields);
+                    displayMenuItems.set(interaction.user.id + 'emoEmojis',
                         displayMenuItems.get(interaction.message.id + 'emoEmojis'));
-                    displayMenuItems.set(interaction.id + 'emoBanners',
+                    displayMenuItems.set(interaction.user.id + 'emoBanners',
                         displayMenuItems.get(interaction.message.id + 'emoBanners'));
                     await displayModal(interaction, emoFields.message);
                 }
@@ -81,21 +81,22 @@ module.exports = {
                     emoFields
                 );
             } else if (interaction.isModalSubmit()) {
+                interaction.deferReply();
                 // get submitted text
-                const emoFields = displayMenuItems.get(interaction.id + 'emoFields'); 
+                const emoFields = displayMenuItems.get(interaction.user.id + 'emoFields'); 
 
                 await displayEmoji(
                     interaction, 
-                    displayMenuItems.get(interaction.id + 'emoEmojis').filter(
+                    displayMenuItems.get(interaction.user.id + 'emoEmojis').filter(
                     item => item.value === emoFields.emoji).first(), 
                     interaction.fields.getTextInputValue('messageInput'),
-                    displayMenuItems.get(interaction.id + 'emoBanners').filter(
+                    displayMenuItems.get(interaction.user.id + 'emoBanners').filter(
                         item => item.value === emoFields.banner).first()
                 );
                 // remove items from displayMenuItems 
-                displayMenuItems.delete(interaction.id + 'emoFields');
-                displayMenuItems.delete(interaction.id + 'emoEmojis');
-                displayMenuItems.delete(interaction.id + 'emoBanners');
+                displayMenuItems.delete(interaction.user.id + 'emoFields');
+                displayMenuItems.delete(interaction.user.id + 'emoEmojis');
+                displayMenuItems.delete(interaction.user.id + 'emoBanners');
             }
 
             if (!interaction.isModalSubmit()) {
@@ -111,6 +112,8 @@ module.exports = {
                         }
                     } 
                 }
+            } else {
+                interaction.deleteReply();
             }
         } catch (error) {
             console.error(error);

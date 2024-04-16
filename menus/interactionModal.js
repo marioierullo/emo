@@ -10,7 +10,7 @@ module.exports = {
         //create modal
         const modal = new ModalBuilder()
         .setCustomId('emoModal')
-        .setTitle('EMO Reacción con Mensaje y Fondo');
+        .setTitle('Tú EMO Reacción con Mensaje');
 
         //text input
         const messageInput = new TextInputBuilder()
