@@ -6,7 +6,7 @@ const {
 } = require('discord.js');
 
 module.exports = {
-    displayModal: async function(interaction) {
+    displayModal: async function(interaction, message) {
         //create modal
         const modal = new ModalBuilder()
         .setCustomId('emoModal')
@@ -18,7 +18,7 @@ module.exports = {
             .setLabel("Escribe tu mensaje aquí")
             // Paragraph means multiple lines of text.
             .setStyle(TextInputStyle.Paragraph)
-            .setValue(displayMenuItems.get(interaction.message.id + 'emoFields').message)
+            .setValue(message)
             // set the maximum number of characters to allow
 	        .setMaxLength(200)
             .setRequired(true);
@@ -32,7 +32,7 @@ module.exports = {
         modal.addComponents(messageActionRow);
         
         try {
-        await interaction.showModal(modal);
+            await interaction.showModal(modal);
         } catch (error) {
             console.error(error);
             await interaction.reply(

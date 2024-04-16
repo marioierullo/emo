@@ -77,11 +77,12 @@ module.exports = {
                         message, 
                         selectEmoji.first(), 
                         parsedMessage.message,
-                        selectBanner.random(),
-                        'message'
+                        selectBanner.random()
                     );
                 }else {
                     parsedMessage.banner = selectBanner.random().value;
+                    parsedMessage.emoji = '';
+                    
                     const msgDisplayMenu = 
                         await displayMenu(
                             message, 

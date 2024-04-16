@@ -78,7 +78,7 @@ function textSizeCalculator(context, banner, text) {
 };
 
 module.exports = {
-    displayEmoji: async function(message, emoji, text, banner, eventType) {
+    displayEmoji: async function(message, emoji, text, banner) {
         // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
         // Canvas.createCanvas(width, height);
@@ -86,7 +86,7 @@ module.exports = {
             ? Canvas.createCanvas(680, 320) 
             : Canvas.createCanvas(128, 128);
         const context = canvas.getContext('2d');
-    
+
         try {    
             // This uses the emoji dimensions 128 x 128
             const emoEmoji = await Canvas.loadImage(appRoot + emoji.value);
@@ -124,17 +124,16 @@ module.exports = {
                 await canvas.encode('png'), { name: 'displayEmoji.png'}
             );
 
-            if(eventType === 'message')
-                await message.channel.send({ files: [attachment] });
-            else
-                await message.reply({ files: [attachment] });
+            await message.channel.send({ files: [attachment] });
+
         } catch (error) {
             console.error(error);
-            if (message.replied || message.deferred) {
-                await message.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-            } else {
-                await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-            }
+            await interaction.reply(
+                { 
+                    content: 'There was an error while executing displayEmoji!', 
+                    ephemeral: true 
+                }
+            );
         }
     }    
 };
