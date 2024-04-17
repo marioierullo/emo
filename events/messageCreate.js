@@ -59,8 +59,13 @@ module.exports = {
     
         // Check if the message mentions the bot
         if (message.mentions.has(message.client.user)) { 
-            // remove client user message from screen
-            await message.delete();
+            // remove items from displayMenuItems created by author
+            if(displayMenuItems.has(message.author.id + 'emoFields'))
+                displayMenuItems.delete(message.author.id + 'emoFields');
+            if(displayMenuItems.has(message.author.id + 'emoEmojis'))
+                displayMenuItems.delete(message.author.id + 'emoEmojis');
+            if(displayMenuItems.has(message.author.id + 'emoBanners'))
+                displayMenuItems.delete(message.author.id + 'emoBanners');
 
             // parse message arguments
             const parsedMessage = parseMessageContent(message.content);
@@ -80,15 +85,16 @@ module.exports = {
                         selectBanner.random()
                     );
                 }else {
+                    parsedMessage.emoji = selectEmoji.random().value;
                     parsedMessage.banner = selectBanner.random().value;
-                    parsedMessage.emoji = '';
-                    
+
                     const msgDisplayMenu = 
                         await displayMenu(
                             message, 
                             selectEmoji, 
                             selectBanner,
-                            parsedMessage.banner
+                            parsedMessage,
+                            true
                         );
     
                     // Delete after 30 seconds;
@@ -106,12 +112,14 @@ module.exports = {
                     // add banner collection to menu items 
                     displayMenuItems.set(msgDisplayMenu.id + 'emoBanners', selectBanner);           
                 }
+                // remove client user message from screen
+                await message.delete();
             } catch (error) {
                 console.error(error);
                 await message.reply(
                     { 
                         content: 'There was an error while executing a message!', 
-                        ephemeral: true 
+                        failIfNotExists: true 
                     }
                 );
             }

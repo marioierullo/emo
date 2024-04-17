@@ -3,8 +3,7 @@ const { Events} = require('discord.js');
 //require root directory and path to modal object
 const appRoot = require('app-root-path');
 const {displayEmoji} = require(appRoot + '/emojis/displayEmoji.js');
-const {deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
-const {displayInteractionMenu} = require(appRoot + '/menus/displayInteractionMenu.js');
+const {displayMenu, deleteDisplayMenu} = require(appRoot + '/menus/displayMenu.js');
 const {displayModal} = require(appRoot + '/menus/interactionModal.js');
 
 function resetDeleteDisplayMenu(message) {
@@ -35,18 +34,7 @@ module.exports = {
                 interaction.customId === 'message'
             ) {    
                 const emoFields = displayMenuItems.get(interaction.message.id + 'emoFields');
-                if(emoFields.emoji.length == 0) {
-                    await interaction.reply(
-                        { 
-                            content: 'Antes de ' + ((interaction.customId === 'submit') 
-                            ? 'realizar el envío' : 'agregar tu mensaje') + 
-                            ', asegúrese de seleccionar un emoji.', 
-                            ephemeral: true 
-                        }
-                    );
-                    resetDeleteDisplayMenu(interaction.message);
-                    return true;
-                } else if(interaction.customId === 'submit') {
+                if(interaction.customId === 'submit') {
                     await displayEmoji(
                         interaction.message, 
                         displayMenuItems.get(interaction.message.id + 'emoEmojis').filter(
@@ -74,7 +62,7 @@ module.exports = {
                 displayMenuItems.delete(interaction.message.id + 'emoFields');
                 displayMenuItems.set(interaction.message.id + 'emoFields', emoFields);
                 
-                await displayInteractionMenu(
+                await displayMenu(
                     interaction, 
                     displayMenuItems.get(interaction.message.id + 'emoEmojis'),
                     displayMenuItems.get(interaction.message.id + 'emoBanners'),
