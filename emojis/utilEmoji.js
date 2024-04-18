@@ -248,7 +248,7 @@ function collectionBanner() {
             description: 'Con las manos arriba.', 
             value: '/images/banners/banner6.png',
             height: 320,
-            startTextWidth: 360,
+            startTextWidth: 380,
             endTextWidth: 680,
             textHeight: 30 
         }
