@@ -195,7 +195,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo2', 
@@ -206,7 +208,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo3', 
@@ -217,7 +221,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     )
     collectionBanner.set('fondo4', 
@@ -228,7 +234,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo5', 
@@ -239,7 +247,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo6', 
@@ -250,7 +260,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo7', 
@@ -261,7 +273,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo8', 
@@ -272,7 +286,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo9', 
@@ -283,7 +299,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo10', 
@@ -294,7 +312,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo11', 
@@ -305,7 +325,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     collectionBanner.set('fondo12', 
@@ -316,7 +338,9 @@ function collectionBanner() {
             height: 320,
             startTextWidth: 380,
             endTextWidth: 680,
-            textHeight: 30 
+            textHeight: 28,
+            textRowLength : 26,
+            textRows : 11 
         }
     );
     return collectionBanner;

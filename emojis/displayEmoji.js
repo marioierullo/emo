@@ -11,49 +11,54 @@ function textSizeCalculator(context, banner, text) {
     context.font = 'italic 24px sans-serif';
     context.fillStyle = '#ffffff';
 
-    const textRowWidth = 26;
-    const textRows = Math.trunc(banner.height / banner.textHeight);
-    const estimateRows = Math.trunc(text.length / textRowWidth);
+    const estimateRows = Math.trunc(text.length / banner.textRowLength) + 
+        (text.match(/\n/g) || []).length;
 
-    let textRowPos = (estimateRows < textRows) 
-        ? Math.abs(banner.height / 2 - banner.textHeight * estimateRows)
-        : banner.textHeight;
-    
+    let textRowPos; 
+    if(estimateRows > 6 && estimateRows < 9)
+        textRowPos = banner.textHeight * 2;
+    else if(estimateRows > 4 && estimateRows < 7)
+        textRowPos = banner.textHeight * 3;
+    else if(estimateRows > 2 && estimateRows < 5)
+        textRowPos = banner.textHeight * 4;
+    else if(estimateRows < 3)
+        textRowPos = banner.textHeight * 5;
+    else
+        textRowPos = banner.textHeight;
+
     let rows = 0;
     do {
         var rowText = text;
-        if(rowText.length > textRowWidth) 
-            rowText = rowText.substring(0, textRowWidth);             
+        if(rowText.length > banner.textRowLength) {
+            rowText = rowText.substring(0, banner.textRowLength);             
+            if(!rowText.includes('\n') && rowText.includes(' ')) {
+                var spaceIndex = rowText.lastIndexOf(' ');
+                if(spaceIndex < (banner.textRowLength - 1)) 
+                    rowText = rowText.substring(0, spaceIndex);
+            }
+        }
         if(rowText.includes('\n')) {
             rowText = rowText.substring(0, rowText.indexOf('\n'));
             text = text.replace('\n',' ');
-        }
-        if(rowText.includes(' ')) {
-            var spaceIndex = rowText.lastIndexOf(' ');
-            if(spaceIndex < (textRowWidth - 1)) 
-                rowText = rowText.substring(0, spaceIndex);
         }
 
         rowText = rowText.trim();
         text = text.replace(rowText,'').trim();
         
         if(rowText.length > 0) { 
-            if(
-                rowText.length === text.length || 
-                text.replaceAll('\n','').trim().length === 0
-            )
-                rows = textRows; 
+            if(text.replaceAll('\n','').trim().length === 0)
+                rows = banner.textRows; 
             else
                 ++rows;    
             context.fillText(
                 ((rows === 1) ? '"' : '') + 
                 rowText +  
-                ((rows === textRows)? '"' : ''), 
+                ((rows === banner.textRows)? '"' : ''), 
                 banner.startTextWidth, textRowPos
             );
             textRowPos += banner.textHeight;
         }
-    } while(rows < textRows);
+    } while(rows < banner.textRows);
 };
 
 module.exports = {
