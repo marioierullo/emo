@@ -27,12 +27,12 @@ function writeText(context){
         132, canvas.height - 70);
         context.fillText('2. Agrega la opción de fondo más un mensaje.', 
         132, canvas.height - 50);
-    context.fillText('3. Envía su selección.', 
+    context.fillText('3. Envía su selección de reacción de EMO.', 
         132, canvas.height - 30);
 
     //commandline
     context.font = 'bold 17px sans-serif';
-    context.fillText('Comando de Emo Reacción:', 132, canvas.height - 10);
+    context.fillText('Comando de Reacción de EMO:', 132, canvas.height - 10);
 
     context.font = '15px sans-serif';
     context.fillText('@emo <', 362, canvas.height - 10);
@@ -62,7 +62,7 @@ module.exports = {
         //emoji select
         const emojiSelect = new StringSelectMenuBuilder()
         .setCustomId('emojiSelect')
-        .setPlaceholder('Elija su reacción de emoji Emo');
+        .setPlaceholder('Elija su reacción de emoji EMO');
     
         selectEmoji.forEach(
             collection => {
@@ -92,7 +92,7 @@ module.exports = {
         //banner select
         const bannerSelect = new StringSelectMenuBuilder()
         .setCustomId('bannerSelect')
-        .setPlaceholder('Elija su fondo de mensaje Emo');
+        .setPlaceholder('Elija su fondo de mensaje EMO');
     
         selectBanner.forEach(
             collection => {
@@ -125,7 +125,7 @@ module.exports = {
 
         const btnSubmit = new ButtonBuilder()
 			.setCustomId('submit')
-			.setLabel('Envía su selección')
+			.setLabel('Envía su selección de reacción de EMO')
 			.setStyle(ButtonStyle.Primary);
 
         const btnCancel = new ButtonBuilder()
@@ -195,20 +195,12 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            if(rtnVal)
-                await message.reply(
-                    { 
-                        content: 'There was an error while executing displayMenu!', 
-                        failIfNotExists: true
-                    }
-                );
-            else
-                await message.reply(
-                    { 
-                        content: 'There was an error while executing displayMenu!', 
-                        ephemeral: true 
-                    }
-                );
+            await message.reply(
+                { 
+                    content: 'There was an error while executing displayMenu!', 
+                    ephemeral: true 
+                }
+            );
         }
     },
     deleteDisplayMenu: function(message) {
