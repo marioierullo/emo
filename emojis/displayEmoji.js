@@ -62,7 +62,7 @@ function textSizeCalculator(context, banner, text) {
 };
 
 module.exports = {
-    displayEmoji: async function(message, emoji, text, banner) {
+    displayEmoji: async function(message, emoji, text, banner, blnReply = false) {
         // Create a 680x320 pixel canvas and get its context
         // The context will be used to modify the canvas
         // Canvas.createCanvas(width, height);
@@ -108,8 +108,10 @@ module.exports = {
                 await canvas.encode('png'), { name: 'displayEmoji.png'}
             );
 
-            await message.channel.send({ files: [attachment] });
-
+            if(blnReply)
+                await message.reply({ files: [attachment] });
+            else
+                await message.channel.send({ files: [attachment] });
         } catch (error) {
             console.error(error);
             await interaction.reply(

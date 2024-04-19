@@ -78,11 +78,23 @@ module.exports = {
 
             try {
                 if (selectEmoji.size === 1 ) {
+                    var blnReply = false;
+                    var msg = message;
+                    let { channel, reference: reply } = message;
+                    if(reply) {
+                        const repliedTo = await channel.messages.fetch(reply.messageId);
+                        if(repliedTo) {
+                            blnReply = true;
+                            msg = repliedTo;
+                        }
+                    }
+
                     await displayEmoji(
-                        message, 
+                        msg, 
                         selectEmoji.first(), 
                         parsedMessage.message,
-                        selectBanner.random()
+                        selectBanner.random(),
+                        blnReply
                     );
                 }else {
                     parsedMessage.emoji = selectEmoji.random().value;
@@ -118,8 +130,7 @@ module.exports = {
                 console.error(error);
                 await message.reply(
                     { 
-                        content: 'There was an error while executing a message!', 
-                        failIfNotExists: true 
+                        content: 'There was an error while executing a message!'
                     }
                 );
             }
